@@ -1,0 +1,153 @@
+basePath: /api/v1
+consumes:
+- application/json
+definitions:
+  account_handler.changePasswordReq:
+    properties:
+      clear_session:
+        example: false
+        type: boolean
+      new_password:
+        example: QcU+,317QL[t
+        type: string
+      old_password:
+        example: badboy2015
+        type: string
+    required:
+    - new_password
+    - old_password
+    type: object
+  account_handler.loginReq:
+    properties:
+      email:
+        example: user@example.com
+        type: string
+      password:
+        example: qwerty123
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  account_handler.updateReq:
+    properties:
+      name:
+        example: John Doe
+        type: string
+    type: object
+  account_usecase.AuthOutput:
+    properties:
+      customer:
+        $ref: '#/definitions/account_usecase.Customer'
+      subscription:
+        $ref: '#/definitions/account_usecase.Subscription'
+    type: object
+  account_usecase.Customer:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  account_usecase.Subscription:
+    properties:
+      created_at:
+        type: string
+      expires_at:
+        type: string
+    type: object
+  httphelper.HttpError:
+    properties:
+      code:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: no description
+  title: Foodx API Documentation
+  version: "1.0"
+paths:
+  /account:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/account_usecase.AuthOutput'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      security:
+      - access_token: []
+      tags:
+      - Account
+    patch:
+      parameters:
+      - description: update input data
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/account_handler.updateReq'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      tags:
+      - Account
+  /account/login:
+    post:
+      parameters:
+      - description: login input data
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/account_handler.loginReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/account_usecase.AuthOutput'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      tags:
+      - Account
+  /account/logout:
+    post:
+      responses:
+        "200":
+          description: OK
+      security:
+      - access_token: []
+      tags:
+      - Account
+  /account/password:
+    patch:
+      parameters:
+      - description: change password data
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/account_handler.changePasswordReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/account_usecase.AuthOutput'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      tags:
+      - Account
+produces:
+- application/json
+swagger: "2.0"
