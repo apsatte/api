@@ -120,5 +120,9 @@ func (r *repo) GetOneByID(c context.Context, projectID uuid.UUID) (*project.Proj
 		}
 	}
 
+	if prjct == nil {
+		return nil, domain.ErrNotFound
+	}
+
 	return prjct, nil
 }

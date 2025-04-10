@@ -5,12 +5,14 @@ import (
 	"api/pkg/httphelper"
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
 type ProjectUseCase interface {
 	Add(c context.Context, d *project_usecase.AddProjectInput) error
 	GetByCustomerID(c context.Context) ([]*project_usecase.ProjectOutput, error)
+	Remove(c context.Context, projectID uuid.UUID) error
 }
 
 type handler struct {
@@ -29,4 +31,5 @@ func (h *handler) Register(g *echo.Group, m httphelper.Middleware) {
 	private := projects.Group("", m.Authenticate)
 	private.GET("", h.getMy)
 	private.POST("", h.add)
+	private.DELETE("/:projectID", h.remove)
 }

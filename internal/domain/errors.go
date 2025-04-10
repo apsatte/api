@@ -7,6 +7,7 @@ var (
 	ErrDatabase     = errors.New("DATABASE_ERROR")
 	ErrNotFound     = errors.New("NOT_FOUND")
 	ErrUnauthorized = errors.New("UNAUTHORIZED")
+	ErrForbidden    = errors.New("FORBIDDEN")
 )
 
 // modules

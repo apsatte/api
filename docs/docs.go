@@ -210,6 +210,33 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/projects/{projectID}": {
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "projectID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/httphelper.HttpError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

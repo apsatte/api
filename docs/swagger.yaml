@@ -277,6 +277,23 @@ paths:
             $ref: '#/definitions/httphelper.HttpError'
       tags:
       - Projects
+  /projects/{projectID}:
+    delete:
+      parameters:
+      - description: Project ID
+        in: path
+        name: projectID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      tags:
+      - Projects
 produces:
 - application/json
 swagger: "2.0"
