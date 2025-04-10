@@ -12,7 +12,7 @@ func TestSave(t *testing.T) {
 	ctx, _, repo := setupTestDB(t)
 
 	t.Run("success/create", func(t *testing.T) {
-		prjct, err := project.New(uuid.New(), "Untitled", "logo.jpeg", "background.jpeg", []string{"kk", "ru"})
+		prjct, err := project.New(uuid.New(), "Untitled", "logo.jpeg", "background.jpeg", 0, []string{"kk", "ru"})
 		if err != nil {
 			t.Fail()
 		}
@@ -22,7 +22,7 @@ func TestSave(t *testing.T) {
 	})
 
 	t.Run("success/update", func(t *testing.T) {
-		prjct, err := project.New(uuid.New(), "Untitled", "logo.jpeg", "background.jpeg", []string{"kk", "ru"})
+		prjct, err := project.New(uuid.New(), "Untitled", "logo.jpeg", "background.jpeg", 0, []string{"kk", "ru"})
 		if err != nil {
 			t.Fail()
 		}

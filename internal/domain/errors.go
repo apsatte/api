@@ -24,6 +24,7 @@ var (
 // project
 var (
 	ErrProjectModuleAlreadyExists = errors.New("PROJECT_MODULE_ALREADY_EXISTS")
+	ErrProjectsLimit              = errors.New("PROJECTS_LIMIT")
 )
 
 // dish

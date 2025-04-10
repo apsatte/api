@@ -46,6 +46,7 @@ type Param struct {
 func New(
 	customerID uuid.UUID,
 	name, logoURL, backgroundURL string,
+	serviceFee uint,
 	languages []string) (*Project, error) {
 	ID, err := uuid.NewRandom()
 	if err != nil {
@@ -58,6 +59,7 @@ func New(
 		Name:          name,
 		LogoURL:       logoURL,
 		BackgroundURL: backgroundURL,
+		ServiceFee:    serviceFee,
 		Languages:     languages,
 		CreatedAt:     time.Now().UTC(),
 	}, nil

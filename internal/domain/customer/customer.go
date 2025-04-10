@@ -17,9 +17,10 @@ type Customer struct {
 }
 
 type Subscription struct {
-	PlanOptionID uuid.UUID
-	ExpiresAt    time.Time
-	CreatedAt    time.Time
+	PlanOptionID  uuid.UUID
+	ProjectsLimit uint
+	ExpiresAt     time.Time
+	CreatedAt     time.Time
 }
 
 func NewCustomer(email, password, name string, subscription *Subscription) (*Customer, error) {

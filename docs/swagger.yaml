@@ -61,6 +61,38 @@ definitions:
       code:
         type: string
     type: object
+  projects_handler.addReq:
+    properties:
+      background:
+        example: aGVsbG8gd29ybGQ=
+        type: string
+      description:
+        example: The Best Restaurant in the City.
+        type: string
+      languages:
+        example:
+        - kz
+        - en
+        items:
+          type: string
+        type: array
+      logo:
+        example: aGVsbG8gd29ybGQ=
+        type: string
+      name:
+        example: Burger Queen
+        type: string
+      service_fee:
+        example: 10
+        type: integer
+    required:
+    - background
+    - description
+    - languages
+    - logo
+    - name
+    - service_fee
+    type: object
 info:
   contact: {}
   description: no description
@@ -148,6 +180,24 @@ paths:
             $ref: '#/definitions/httphelper.HttpError'
       tags:
       - Account
+  /projects:
+    post:
+      parameters:
+      - description: add project data
+        in: body
+        name: project
+        required: true
+        schema:
+          $ref: '#/definitions/projects_handler.addReq'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      tags:
+      - Projects
 produces:
 - application/json
 swagger: "2.0"

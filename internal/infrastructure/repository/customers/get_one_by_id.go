@@ -15,16 +15,21 @@ func (r *repo) GetOneByID(c context.Context, ID uuid.UUID) (*customer.Customer, 
 	var output customer.Customer
 	output.Subscription = &customer.Subscription{}
 
-	sql := `SELECT c.id, c.email, c.password, c.name, c.created_at, s.plan_option_id, s.expires_at, s.created_at as sub_created_at
+	sql := `SELECT
+						c.id, c.email, c.password, c.name, c.created_at,
+						s.plan_option_id, po.duration_days, s.expires_at, s.created_at as sub_created_at
 					FROM customers.customers as c
-					JOIN customers.subscriptions as s ON s.customer_id = c.id
+					LEFT JOIN customers.subscriptions as s ON s.customer_id = c.id
+					LEFT JOIN customers.plan_options as po ON po.id = s.plan_option_id
 					WHERE c.id = $1 AND removed_at IS NULL LIMIT 1;`
 
 	row := r.db.QueryRow(c, sql, ID)
 	err := row.Scan(
 		&output.ID, &output.Email, &output.Password,
 		&output.Name, &output.CreatedAt,
-		&output.Subscription.PlanOptionID, &output.Subscription.ExpiresAt,
+		&output.Subscription.PlanOptionID,
+		&output.Subscription.ProjectsLimit,
+		&output.Subscription.ExpiresAt,
 		&output.Subscription.CreatedAt,
 	)
 	if err != nil {

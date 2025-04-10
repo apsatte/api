@@ -2,13 +2,17 @@ package main
 
 import (
 	account_usecase "api/internal/application/account"
+	project_usecase "api/internal/application/project"
 	customers_repository "api/internal/infrastructure/repository/customers"
+	projects_repository "api/internal/infrastructure/repository/projects"
 	sessions_repository "api/internal/infrastructure/repository/sessions"
 	"api/internal/transport/http"
-	account_handler "api/internal/transport/http/handlers"
+	account_handler "api/internal/transport/http/handlers/account"
+	projects_handler "api/internal/transport/http/handlers/project"
 	"api/pkg/configuration"
 	"api/pkg/logger"
 	"api/pkg/postgresql"
+	"api/pkg/storage"
 	"context"
 	"log"
 	"os"
@@ -35,19 +39,28 @@ func main() {
 		logger.Fatal("failed to connect postgresql", zap.Error(err))
 	}
 
+	storage, err := storage.New(&config.S3)
+	if err != nil {
+		logger.Fatal("failed to connect S3 Storage", zap.Error(err))
+	}
+
 	// repositories
 	customersRepo := customers_repository.New(logger, db)
 	sessionsRepo := sessions_repository.New(logger, db)
+	projectsRepo := projects_repository.New(logger, db)
 
 	// usecases
 	accountUseCase := account_usecase.New(customersRepo, sessionsRepo)
+	projectsUseCase := project_usecase.New(projectsRepo, customersRepo, storage)
 
 	// handlers
 	accountHandler := account_handler.New(accountUseCase)
+	proejctsHandler := projects_handler.New(projectsUseCase)
 
 	httpServer := http.New(sessionsRepo)
 	httpServer.SetupRouter(
 		accountHandler,
+		proejctsHandler,
 	)
 
 	go func() {

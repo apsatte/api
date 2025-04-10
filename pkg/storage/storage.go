@@ -70,6 +70,8 @@ func (s *storage) put(c context.Context, object []byte) (string, error) {
 
 	filename := randomKey + exts[0]
 
+	print(s.bucketName)
+
 	_, err = s.client.PutObject(c, s.bucketName, filename, bytes.NewReader(object), int64(len(object)), opts)
 	return filename, err
 }

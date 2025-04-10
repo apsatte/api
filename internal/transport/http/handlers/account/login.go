@@ -31,6 +31,7 @@ func (h *handler) Login(c echo.Context) error {
 
 	cookie := &http.Cookie{
 		Name:     "access_token",
+		Path:     "/",
 		Value:    accessToken,
 		HttpOnly: true,
 	}

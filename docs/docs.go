@@ -154,6 +154,35 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/projects": {
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "parameters": [
+                    {
+                        "description": "add project data",
+                        "name": "project",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/projects_handler.addReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/httphelper.HttpError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -242,6 +271,49 @@ const docTemplate = `{
             "properties": {
                 "code": {
                     "type": "string"
+                }
+            }
+        },
+        "projects_handler.addReq": {
+            "type": "object",
+            "required": [
+                "background",
+                "description",
+                "languages",
+                "logo",
+                "name",
+                "service_fee"
+            ],
+            "properties": {
+                "background": {
+                    "type": "string",
+                    "example": "aGVsbG8gd29ybGQ="
+                },
+                "description": {
+                    "type": "string",
+                    "example": "The Best Restaurant in the City."
+                },
+                "languages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "kz",
+                        "en"
+                    ]
+                },
+                "logo": {
+                    "type": "string",
+                    "example": "aGVsbG8gd29ybGQ="
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Burger Queen"
+                },
+                "service_fee": {
+                    "type": "integer",
+                    "example": 10
                 }
             }
         }
