@@ -65,6 +65,10 @@ func New(
 	}, nil
 }
 
+func (p *Project) IsOwner(customerID uuid.UUID) bool {
+	return p.CustomerID == customerID
+}
+
 func (p *Project) GetModuleByID(moduleID string) *Module {
 	for _, module := range p.Modules {
 		if module.ModuleID == moduleID {
@@ -72,6 +76,13 @@ func (p *Project) GetModuleByID(moduleID string) *Module {
 		}
 	}
 	return nil
+}
+
+func (p *Project) Update(name string, serviceFee uint, languages []string, translations map[string]*ProjectTranslation) {
+	p.Name = name
+	p.ServiceFee = serviceFee
+	p.Languages = languages
+	p.Translations = translations
 }
 
 func (p *Project) AddModule(ID string, options []*Option) error {

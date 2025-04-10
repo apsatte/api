@@ -35,6 +35,8 @@ CREATE TABLE customers.plan_translations (
 
   name        VARCHAR(255) NOT NULL,
   description VARCHAR(2000) NOT NULL,
+  
+  PRIMARY KEY(plan_id, lang),
 
   FOREIGN KEY (plan_id) REFERENCES customers.plans (id) ON DELETE CASCADE
 );

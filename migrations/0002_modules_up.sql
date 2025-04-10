@@ -9,6 +9,8 @@ CREATE TABLE modules.module_translations (
   lang      VARCHAR(5) NOT NULL,
   name      VARCHAR(50) NOT NULL,
 
+  PRIMARY KEY (module_id, lang),
+
   FOREIGN KEY (module_id) REFERENCES modules.modules (id) ON DELETE CASCADE
 );
 
@@ -24,6 +26,8 @@ CREATE TABLE modules.option_translations (
   lang      VARCHAR(5) NOT NULL,
   name      VARCHAR(50) NOT NULL,
 
+  PRIMARY KEY (option_id, lang),
+
   FOREIGN KEY (option_id) REFERENCES modules.options (id) ON DELETE CASCADE
 );
 
@@ -38,6 +42,8 @@ CREATE TABLE modules.param_translations (
   param_id VARCHAR(50) NOT NULL,
   lang     VARCHAR(5) NOT NULL,
   name     VARCHAR(50) NOT NULL,
+
+  PRIMARY KEY (param_id, lang),
 
   FOREIGN KEY (param_id) REFERENCES modules.params (id) ON DELETE CASCADE
 );

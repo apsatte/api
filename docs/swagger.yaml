@@ -156,6 +156,33 @@ definitions:
     - name
     - service_fee
     type: object
+  projects_handler.updateReq:
+    properties:
+      languages:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      service_fee:
+        type: integer
+      translations:
+        additionalProperties:
+          $ref: '#/definitions/projects_handler.updateReqTranslation'
+        type: object
+    required:
+    - languages
+    - name
+    - service_fee
+    - translations
+    type: object
+  projects_handler.updateReqTranslation:
+    properties:
+      description:
+        type: string
+    required:
+    - description
+    type: object
 info:
   contact: {}
   description: no description
@@ -280,6 +307,28 @@ paths:
   /projects/{projectID}:
     delete:
       parameters:
+      - description: Project ID
+        in: path
+        name: projectID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      tags:
+      - Projects
+    patch:
+      parameters:
+      - description: update project body
+        in: body
+        name: project
+        required: true
+        schema:
+          $ref: '#/definitions/projects_handler.updateReq'
       - description: Project ID
         in: path
         name: projectID

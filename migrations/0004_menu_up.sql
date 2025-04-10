@@ -38,6 +38,7 @@ CREATE TABLE menu.dish_translations (
   description VARCHAR(512) NOT NULL,
 
   PRIMARY KEY(dish_id, lang),
+
   FOREIGN KEY(dish_id) REFERENCES menu.dishes (id) ON DELETE CASCADE
 );
 
@@ -57,6 +58,7 @@ CREATE TABLE menu.option_translations (
   name      VARCHAR(50) NOT NULL,
 
   PRIMARY KEY(option_id, lang),
+
   FOREIGN KEY(option_id) REFERENCES menu.options (id) ON DELETE CASCADE
 );
 
@@ -75,5 +77,6 @@ CREATE TABLE menu.item_translations (
   name    VARCHAR(50),
 
   PRIMARY KEY(item_id, lang),
+  
   FOREIGN KEY (item_id) REFERENCES menu.items (id) ON DELETE CASCADE
 );

@@ -23,5 +23,13 @@ func (u *useCase) Remove(c context.Context, projectID uuid.UUID) error {
 		return domain.ErrForbidden
 	}
 
-	return u.projectsRepo.Remove(c, project)
+	err = u.projectsRepo.Remove(c, project)
+	if err != nil {
+		return err
+	}
+
+	u.storage.Remove(c, project.LogoURL)
+	u.storage.Remove(c, project.BackgroundURL)
+
+	return nil
 }

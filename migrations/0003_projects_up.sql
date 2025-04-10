@@ -17,6 +17,8 @@ CREATE TABLE projects.translations (
   lang        VARCHAR(5) NOT NULL,
   description VARCHAR(512) NOT NULL,
 
+  PRIMARY KEY (project_id, lang),
+
   FOREIGN KEY (project_id) REFERENCES projects.projects (id) ON DELETE CASCADE
 );
 

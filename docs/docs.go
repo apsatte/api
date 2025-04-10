@@ -236,6 +236,40 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "patch": {
+                "tags": [
+                    "Projects"
+                ],
+                "parameters": [
+                    {
+                        "description": "update project body",
+                        "name": "project",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/projects_handler.updateReq"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "projectID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/httphelper.HttpError"
+                        }
+                    }
+                }
             }
         }
     },
@@ -465,6 +499,46 @@ const docTemplate = `{
                 "service_fee": {
                     "type": "integer",
                     "example": 10
+                }
+            }
+        },
+        "projects_handler.updateReq": {
+            "type": "object",
+            "required": [
+                "languages",
+                "name",
+                "service_fee",
+                "translations"
+            ],
+            "properties": {
+                "languages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "service_fee": {
+                    "type": "integer"
+                },
+                "translations": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/projects_handler.updateReqTranslation"
+                    }
+                }
+            }
+        },
+        "projects_handler.updateReqTranslation": {
+            "type": "object",
+            "required": [
+                "description"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
                 }
             }
         }
