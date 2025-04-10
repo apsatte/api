@@ -15,15 +15,18 @@ type useCase struct {
 	projectsRepo  project.ProjectsRepository
 	customersRepo customer.CustomersRepository
 	storage       IStorage
+	cdnBaseURL    string
 }
 
 func New(
 	projectsRepo project.ProjectsRepository,
 	customersRepo customer.CustomersRepository,
-	storage IStorage) *useCase {
+	storage IStorage,
+	cdnBaseURL string) *useCase {
 	return &useCase{
 		customersRepo: customersRepo,
 		projectsRepo:  projectsRepo,
 		storage:       storage,
+		cdnBaseURL:    cdnBaseURL,
 	}
 }

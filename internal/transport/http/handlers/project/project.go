@@ -10,6 +10,7 @@ import (
 
 type ProjectUseCase interface {
 	Add(c context.Context, d *project_usecase.AddProjectInput) error
+	GetByCustomerID(c context.Context) ([]*project_usecase.ProjectOutput, error)
 }
 
 type handler struct {
@@ -26,5 +27,6 @@ func (h *handler) Register(g *echo.Group, m httphelper.Middleware) {
 	projects := g.Group("/projects")
 
 	private := projects.Group("", m.Authenticate)
+	private.GET("", h.getMy)
 	private.POST("", h.add)
 }

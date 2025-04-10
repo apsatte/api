@@ -61,6 +61,69 @@ definitions:
       code:
         type: string
     type: object
+  project_usecase.ProjectOutput:
+    properties:
+      background_url:
+        type: string
+      id:
+        type: string
+      languages:
+        items:
+          type: string
+        type: array
+      logo_url:
+        type: string
+      modules:
+        items:
+          $ref: '#/definitions/project_usecase.ProjectOutputModule'
+        type: array
+      name:
+        type: string
+      service_fee:
+        type: integer
+      translations:
+        additionalProperties:
+          $ref: '#/definitions/project_usecase.ProjectOutputTranslation'
+        type: object
+    type: object
+  project_usecase.ProjectOutputModule:
+    properties:
+      id:
+        type: string
+      is_active:
+        type: boolean
+      module_id:
+        type: string
+      options:
+        items:
+          $ref: '#/definitions/project_usecase.ProjectOutputOption'
+        type: array
+    type: object
+  project_usecase.ProjectOutputOption:
+    properties:
+      id:
+        type: string
+      is_active:
+        type: boolean
+      option_id:
+        type: string
+      params:
+        items:
+          $ref: '#/definitions/project_usecase.ProjectOutputParam'
+        type: array
+    type: object
+  project_usecase.ProjectOutputParam:
+    properties:
+      param_id:
+        type: string
+      value:
+        type: string
+    type: object
+  project_usecase.ProjectOutputTranslation:
+    properties:
+      description:
+        type: string
+    type: object
   projects_handler.addReq:
     properties:
       background:
@@ -181,6 +244,22 @@ paths:
       tags:
       - Account
   /projects:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/project_usecase.ProjectOutput'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      security:
+      - access_token: []
+      tags:
+      - Projects
     post:
       parameters:
       - description: add project data

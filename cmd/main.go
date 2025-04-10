@@ -51,7 +51,7 @@ func main() {
 
 	// usecases
 	accountUseCase := account_usecase.New(customersRepo, sessionsRepo)
-	projectsUseCase := project_usecase.New(projectsRepo, customersRepo, storage)
+	projectsUseCase := project_usecase.New(projectsRepo, customersRepo, storage, config.Server.CdnBaseUrl)
 
 	// handlers
 	accountHandler := account_handler.New(accountUseCase)

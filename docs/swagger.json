@@ -149,6 +149,33 @@
             }
         },
         "/projects": {
+            "get": {
+                "security": [
+                    {
+                        "access_token": []
+                    }
+                ],
+                "tags": [
+                    "Projects"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/project_usecase.ProjectOutput"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/httphelper.HttpError"
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Projects"
@@ -263,6 +290,103 @@
             "type": "object",
             "properties": {
                 "code": {
+                    "type": "string"
+                }
+            }
+        },
+        "project_usecase.ProjectOutput": {
+            "type": "object",
+            "properties": {
+                "background_url": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "languages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "logo_url": {
+                    "type": "string"
+                },
+                "modules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/project_usecase.ProjectOutputModule"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "service_fee": {
+                    "type": "integer"
+                },
+                "translations": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/project_usecase.ProjectOutputTranslation"
+                    }
+                }
+            }
+        },
+        "project_usecase.ProjectOutputModule": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "module_id": {
+                    "type": "string"
+                },
+                "options": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/project_usecase.ProjectOutputOption"
+                    }
+                }
+            }
+        },
+        "project_usecase.ProjectOutputOption": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "option_id": {
+                    "type": "string"
+                },
+                "params": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/project_usecase.ProjectOutputParam"
+                    }
+                }
+            }
+        },
+        "project_usecase.ProjectOutputParam": {
+            "type": "object",
+            "properties": {
+                "param_id": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "project_usecase.ProjectOutputTranslation": {
+            "type": "object",
+            "properties": {
+                "description": {
                     "type": "string"
                 }
             }
