@@ -4,7 +4,9 @@ import "errors"
 
 // common
 var (
-	ErrDatabase     = errors.New("DATABASE_ERROR")
+	ErrDatabase = errors.New("DATABASE_ERROR")
+	ErrMail     = errors.New("MAIL_ERROR")
+
 	ErrNotFound     = errors.New("NOT_FOUND")
 	ErrUnauthorized = errors.New("UNAUTHORIZED")
 	ErrForbidden    = errors.New("FORBIDDEN")

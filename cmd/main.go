@@ -2,12 +2,17 @@ package main
 
 import (
 	account_usecase "api/internal/application/account"
+	category_usecase "api/internal/application/category"
+	dish_usecase "api/internal/application/dish"
 	project_usecase "api/internal/application/project"
+	categories_repository "api/internal/infrastructure/repository/categories"
 	customers_repository "api/internal/infrastructure/repository/customers"
+	dishes_repository "api/internal/infrastructure/repository/dishes"
 	projects_repository "api/internal/infrastructure/repository/projects"
 	sessions_repository "api/internal/infrastructure/repository/sessions"
 	"api/internal/transport/http"
 	account_handler "api/internal/transport/http/handlers/account"
+	menu_handler "api/internal/transport/http/handlers/menu"
 	projects_handler "api/internal/transport/http/handlers/project"
 	"api/pkg/configuration"
 	"api/pkg/logger"
@@ -45,6 +50,8 @@ func main() {
 	}
 
 	// repositories
+	categoryRepo := categories_repository.New(logger, db)
+	dishRepo := dishes_repository.New(logger, db)
 	customersRepo := customers_repository.New(logger, db)
 	sessionsRepo := sessions_repository.New(logger, db)
 	projectsRepo := projects_repository.New(logger, db)
@@ -52,15 +59,20 @@ func main() {
 	// usecases
 	accountUseCase := account_usecase.New(customersRepo, sessionsRepo)
 	projectsUseCase := project_usecase.New(projectsRepo, customersRepo, storage, config.Server.CdnBaseUrl)
+	categoryUseCase := category_usecase.New(categoryRepo, customersRepo, projectsRepo)
+	dishUseCase := dish_usecase.New(categoryRepo, customersRepo, projectsRepo, dishRepo, storage)
 
 	// handlers
 	accountHandler := account_handler.New(accountUseCase)
-	proejctsHandler := projects_handler.New(projectsUseCase)
+	projectHandler := projects_handler.New(projectsUseCase)
+	menuHandler := menu_handler.New(categoryUseCase, dishUseCase)
 
+	// http server
 	httpServer := http.New(sessionsRepo)
 	httpServer.SetupRouter(
 		accountHandler,
-		proejctsHandler,
+		projectHandler,
+		menuHandler,
 	)
 
 	go func() {

@@ -17,6 +17,5 @@ func (u *useCase) Update(c context.Context, d *UpdateInput) error {
 	}
 
 	customer.Update(d.Name)
-
 	return u.customersRepo.Save(c, customer)
 }

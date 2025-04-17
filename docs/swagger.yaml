@@ -61,6 +61,63 @@ definitions:
       code:
         type: string
     type: object
+  menu_handler.AddInputTr:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  menu_handler.addCategoryReq:
+    properties:
+      position:
+        type: integer
+      project_id:
+        type: string
+      translations:
+        additionalProperties:
+          $ref: '#/definitions/menu_handler.AddInputTr'
+        type: object
+    required:
+    - position
+    - project_id
+    - translations
+    type: object
+  menu_handler.updateCategoryPositionReq:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/menu_handler.updateCategoryPositionReqItem'
+        type: array
+    required:
+    - categories
+    type: object
+  menu_handler.updateCategoryPositionReqItem:
+    properties:
+      id:
+        type: string
+      position:
+        type: integer
+    required:
+    - id
+    - position
+    type: object
+  menu_handler.updateCategoryReq:
+    properties:
+      translations:
+        additionalProperties:
+          $ref: '#/definitions/menu_handler.updateCategoryTr'
+        type: object
+    required:
+    - translations
+    type: object
+  menu_handler.updateCategoryTr:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
   project_usecase.ProjectOutput:
     properties:
       background_url:
@@ -343,6 +400,70 @@ paths:
             $ref: '#/definitions/httphelper.HttpError'
       tags:
       - Projects
+  /projects/{projectID}/menu/category:
+    post:
+      parameters:
+      - description: body data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/menu_handler.addCategoryReq'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      tags:
+      - Menu
+  /projects/{projectID}/menu/category/{categoryID}:
+    delete:
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      tags:
+      - Menu
+    patch:
+      parameters:
+      - description: body data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/menu_handler.updateCategoryReq'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      tags:
+      - Menu
+  /projects/{projectID}/menu/category/{categoryID}/positions:
+    patch:
+      parameters:
+      - description: body data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/menu_handler.updateCategoryPositionReq'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HttpError'
+      tags:
+      - Menu
 produces:
 - application/json
 swagger: "2.0"

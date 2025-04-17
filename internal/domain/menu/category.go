@@ -32,3 +32,15 @@ func NewCategory(position uint, projectID uuid.UUID, translations map[string]*Ca
 		CreatedAt:    time.Now().UTC(),
 	}, nil
 }
+
+func (c *Category) Update(translations map[string]*CategoryTranslation) {
+	c.Translations = translations
+}
+
+func (c *Category) UpdatePosition(position uint) {
+	c.Position = position
+}
+
+func (c *Category) HasProjectID(projectID uuid.UUID) bool {
+	return c.ProjectID == projectID
+}

@@ -13,8 +13,8 @@ type Customer struct {
 }
 
 type Subscription struct {
-	ExpiresAt time.Time `json:"expires_at"`
-	CreatedAt time.Time `json:"created_at"`
+	ExpiresAt *time.Time `json:"expires_at"`
+	CreatedAt time.Time  `json:"created_at"`
 }
 
 type AuthOutput struct {

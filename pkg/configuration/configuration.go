@@ -22,6 +22,13 @@ type S3 struct {
 	UseSSL          bool   `env:"S3_USE_SSL"`
 }
 
+type SMTP struct {
+	Host     string `env:"SMTP_HOST"`
+	Port     int    `env:"SMTP_PORT"`
+	Username string `env:"SMTP_USERNAME"`
+	Password string `env:"SMTP_PASSWORD"`
+}
+
 type Logger struct {
 	OutputPaths      string `env:"LOGGER_OUTPUT_PATHS"`
 	ErrorOutputPaths string `env:"LOGGER_ERROR_OUTPUT_PATHS"`

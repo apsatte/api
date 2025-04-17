@@ -51,6 +51,18 @@ func NewDish(
 	}, nil
 }
 
+func (d *Dish) Update(categoryID uuid.UUID, price uint, isAvailable bool, translations map[string]*DishTranslation) {
+	d.CategoryID = categoryID
+	d.Price = price
+	d.IsAvailable = isAvailable
+	d.Translations = translations
+}
+
+func (d *Dish) UpdatePhoto(photoURL, photoMiniURL string) {
+	d.PhotoURL = photoURL
+	d.PhotoMiniURL = photoMiniURL
+}
+
 func (d *Dish) GetOptionByID(optionID uuid.UUID) (*DishOption, error) {
 	for _, option := range d.Options {
 		if option.ID == optionID {

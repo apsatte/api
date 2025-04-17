@@ -78,10 +78,11 @@ func seedData(t *testing.T, c context.Context, db *pgxpool.Pool) (*plan.Plan, *c
 	)
 	require.Nil(t, err)
 
+	expiresAt := time.Now().UTC().Add(time.Hour * 24 * 365)
 	// customer
 	subscription := &customer.Subscription{
 		PlanOptionID: optionID,
-		ExpiresAt:    time.Now().UTC().Add(time.Hour * 24 * 365),
+		ExpiresAt:    &expiresAt,
 		CreatedAt:    time.Now().UTC(),
 	}
 	cstmr, _ := customer.NewCustomer("user@example.com", "12346578", "John Doe", subscription)

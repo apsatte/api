@@ -271,6 +271,109 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/projects/{projectID}/menu/category": {
+            "post": {
+                "tags": [
+                    "Menu"
+                ],
+                "parameters": [
+                    {
+                        "description": "body data",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/menu_handler.addCategoryReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/httphelper.HttpError"
+                        }
+                    }
+                }
+            }
+        },
+        "/projects/{projectID}/menu/category/{categoryID}": {
+            "delete": {
+                "tags": [
+                    "Menu"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/httphelper.HttpError"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Menu"
+                ],
+                "parameters": [
+                    {
+                        "description": "body data",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/menu_handler.updateCategoryReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/httphelper.HttpError"
+                        }
+                    }
+                }
+            }
+        },
+        "/projects/{projectID}/menu/category/{categoryID}/positions": {
+            "patch": {
+                "tags": [
+                    "Menu"
+                ],
+                "parameters": [
+                    {
+                        "description": "body data",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/menu_handler.updateCategoryPositionReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/httphelper.HttpError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -358,6 +461,93 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "code": {
+                    "type": "string"
+                }
+            }
+        },
+        "menu_handler.AddInputTr": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "menu_handler.addCategoryReq": {
+            "type": "object",
+            "required": [
+                "position",
+                "project_id",
+                "translations"
+            ],
+            "properties": {
+                "position": {
+                    "type": "integer"
+                },
+                "project_id": {
+                    "type": "string"
+                },
+                "translations": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/menu_handler.AddInputTr"
+                    }
+                }
+            }
+        },
+        "menu_handler.updateCategoryPositionReq": {
+            "type": "object",
+            "required": [
+                "categories"
+            ],
+            "properties": {
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/menu_handler.updateCategoryPositionReqItem"
+                    }
+                }
+            }
+        },
+        "menu_handler.updateCategoryPositionReqItem": {
+            "type": "object",
+            "required": [
+                "id",
+                "position"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "integer"
+                }
+            }
+        },
+        "menu_handler.updateCategoryReq": {
+            "type": "object",
+            "required": [
+                "translations"
+            ],
+            "properties": {
+                "translations": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/menu_handler.updateCategoryTr"
+                    }
+                }
+            }
+        },
+        "menu_handler.updateCategoryTr": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
                     "type": "string"
                 }
             }

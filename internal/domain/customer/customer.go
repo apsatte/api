@@ -19,7 +19,7 @@ type Customer struct {
 type Subscription struct {
 	PlanOptionID  uuid.UUID
 	ProjectsLimit uint
-	ExpiresAt     time.Time
+	ExpiresAt     *time.Time
 	CreatedAt     time.Time
 }
 
@@ -45,6 +45,14 @@ func NewCustomer(email, password, name string, subscription *Subscription) (*Cus
 		Subscription: subscription,
 		CreatedAt:    time.Now().UTC(),
 	}, nil
+}
+
+func (c *Subscription) IsActive() bool {
+	if c.ExpiresAt == nil {
+		return true
+	}
+
+	return c.ExpiresAt.After(time.Now().UTC())
 }
 
 func (c *Customer) ComparePassword(password string) error {
